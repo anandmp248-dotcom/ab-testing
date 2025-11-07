@@ -20,7 +20,7 @@ export default function App({ Component, pageProps }: AppProps) {
           <>
             <script
               async
-              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+              src={`https://www.googletagmanager.com/gtag/js?id=G-0SHRDQ0X4E`}
             />
             <script
               dangerouslySetInnerHTML={{
@@ -28,7 +28,7 @@ export default function App({ Component, pageProps }: AppProps) {
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
                 gtag('js', new Date());
-                gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
+                gtag('config', 'G-0SHRDQ0X4E');
               `,
               }}
             />

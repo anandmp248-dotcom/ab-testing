@@ -37,7 +37,7 @@ const nextConfig = {
         bh: { minValue: 8, maxValue: 8 },
       },
 
-      GTAG_ID: "G-G-0SHRDQ0X4E",
+      GTAG_ID: "G-0SHRDQ0X4E",
     },
   },
   images: {
