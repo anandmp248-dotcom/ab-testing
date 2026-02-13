@@ -1,44 +1,357 @@
+// Oswald Font Import
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap");
+
+.app {
+  display: flex;
+  height: 100vh;
+  background: #f8fafc;
+  padding: 24px;
+  box-sizing: border-box;
+  gap: 24px;
+  font-family: "Oswald", sans-serif;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    padding: 16px;
+    gap: 16px;
+  }
+}
+
+.editorSection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  // background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  // box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  // padding: 24px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 20px;
+  }
+}
+
+.editorHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #eef2f6;
+
+  @media (max-width: 480px) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
+
+.title {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1;
+  color: #0a1929 !important;
+  margin: 0;
+  letter-spacing: 1px;
+  font-family: "Oswald", sans-serif;
+  text-transform: uppercase;
+}
+
+.validButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 8px 15px;
+  border: none;
+  background: #f6c90e;
+  color: #0a1929;
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: "Oswald", sans-serif;
+  letter-spacing: 1px;
+  box-shadow: 0 4px 10px rgba(246, 201, 14, 0.2);
+
+  // &:hover {
+  //   background: #ffd93d;
+  //   transform: translateY(-2px);
+  //   box-shadow: 0 8px 20px rgba(246, 201, 14, 0.3);
+  // }
+
+  &.validating {
+    opacity: 0.7;
+    transform: scale(0.98);
+    pointer-events: none;
+  }
+
+  .buttonIcon {
+    font-size: 16px;
+    font-weight: 700;
+  }
+}
+
+.editorGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  flex: 1;
+  overflow: hidden;
+}
+
+.editorCard {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #0a1929;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #1e2a3a;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  min-height: 0;
+
+  &:hover {
+    border-color: #f6c90e;
+    box-shadow: 0 12px 28px rgba(246, 201, 14, 0.1);
+  }
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  padding: 14px 20px;
+  background: #0f1a2b;
+  border-bottom: 1px solid #1e2a3a;
+}
+
+.indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 12px;
+  box-shadow: 0 0 10px currentColor;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.editorTitle {
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
+  margin: 0;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-family: "Oswald", sans-serif;
+}
+
+.editorContainer {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  background: #0a1929;
+
+  :global(.cm-editor) {
+    height: 100%;
+    font-size: 14px;
+    font-family: "Fira Code", "Courier New", monospace;
+  }
+}
+
+.validationMessage {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  border-top: 1px solid #1e2a3a;
+  animation: slideIn 0.3s ease;
+  font-family: "Oswald", sans-serif;
+  letter-spacing: 0.5px;
+
+  &.success {
+    background: rgba(46, 204, 113, 0.05);
+    color: #2ecc71;
+  }
+
+  &.error {
+    background: rgba(231, 76, 60, 0.05);
+    color: #ff6b6b;
+  }
+
+  .messageIcon {
+    font-size: 16px;
+    font-weight: 700;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.previewSection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  // background: white;
+  // border-radius: 20px;
+  overflow: hidden;
+  // box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+  padding: 24px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 20px;
+  }
+}
+
+.previewHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #eef2f6;
+}
+
+.previewTitle {
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 1;
+  color: #0a1929 !important;
+  margin: 0;
+  letter-spacing: 1px;
+  font-family: "Oswald", sans-serif;
+  text-transform: uppercase;
+}
+
+.previewBadge {
+  padding: 6px 18px;
+  background: rgba(46, 204, 113, 0.08);
+  color: #2ecc71;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 40px;
+  letter-spacing: 1px;
+  font-family: "Oswald", sans-serif;
+  text-transform: uppercase;
+  border: 1px solid rgba(46, 204, 113, 0.2);
+}
+
 .contentSpace {
-  transition: width 0.3s ease;
-  box-shadow:
-    rgba(17, 17, 26, 0.05) 0px 1px 0px,
-    rgba(17, 17, 26, 0.1) 0px 0px 8px;
-  border: 2px dashed #ccc;
-  background-color: #f9f9f9;
-  padding: 6px;
+  flex: 1;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
   position: relative;
-  font-family:
-    "Inter",
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    Oxygen,
-    Ubuntu,
-    Cantarell,
-    "Open Sans",
-    "Helvetica Neue",
-    sans-serif;
-  overflow-y: auto;
-  overflow-x: hidden;
-  width: 100%;
-  margin: 2% 1%;
+  transition: all 0.3s ease;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.02);
+  border: 2px solid #eef2f6;
+  background-color: #ffffff;
+
+  &:hover {
+    border-color: #f6c90e;
+  }
 
   &::-webkit-scrollbar {
-    width: 4px;
+    width: 8px;
+    height: 8px;
   }
 
   &::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 4px;
+    background: #f1f5f9;
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #a8a7a7;
+    background: #cbd5e1;
     border-radius: 4px;
+
+    &:hover {
+      background: #94a3b8;
+    }
+  }
+}
+
+.previewFrame {
+  width: 100%;
+  height: 100%;
+  border: none;
+  background: white;
+}
+
+// Responsive adjustments
+@media (max-width: 1200px) {
+  .editorSection,
+  .previewSection {
+    padding: 20px;
   }
 
-  &::-webkit-scrollbar-thumb:hover {
-    background: #555;
+  .title,
+  .previewTitle {
+    font-size: 24px;
   }
+}
+
+@media (max-width: 960px) {
+  .title,
+  .previewTitle {
+    font-size: 22px;
+  }
+
+  .validButton {
+    padding: 10px 24px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 768px) {
+  .app {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .editorSection,
+  .previewSection {
+    min-height: 500px;
+    padding: 18px;
+  }
+}
+
+// Dark theme enhancements for editor
+:global(.cm-editor) {
+  background: transparent !important;
+}
+
+:global(.cm-gutters) {
+  background: #0f1a2b !important;
+  border-right: 1px solid #1e2a3a !important;
+}
+
+:global(.cm-activeLineGutter) {
+  background-color: rgba(246, 201, 14, 0.1) !important;
+}
+
+:global(.cm-content) {
+  font-family: "Fira Code", "Courier New", monospace;
 }

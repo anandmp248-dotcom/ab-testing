@@ -1,93 +1,12 @@
-// import Layout from "@/layout/Layout";
-// import { MapBlock } from "@/blocks/blockMap"
-// import { NextSeo } from "next-seo";
-// import { PageProps } from "@/@types/pageTypes";
-
-
-// export default function Home(props: PageProps) {
-
-//   const userSettings = props?.uiSettings;
-//   const mainContent = props?.uiSettings?.TH00201P01?.blocks?.map((block) => {
-//     if (block?.isBlockEnabled === true) {
-//       return MapBlock(block.blockId, block);
-//     }
-//   });
-
-//   const seoValues = userSettings?.TH00183P01?.seo;
-//   const siteName = process.env.siteIdentity.siteName || "Instigo";
-//   const siteDescription = process.env.siteIdentity.siteDescription || "";
-//   const siteLogo = process.env.siteIdentity.siteLogo || "";
-//   const canonicalUrl = `${process.env.basePath}${typeof window !== 'undefined' ? window.location.pathname : ''}`;
-//   const title = seoValues?.title || siteName;
-//   const description = seoValues?.description || siteDescription;
-//   const keywords = seoValues?.keywords?.join(", ") || "default, keywords";
-
-
-//   return (
-//     <>
-//       <NextSeo
-//         title={title}
-//         description={description}
-//         canonical={canonicalUrl}
-//         openGraph={{
-//           title,
-//           description,
-//           images: [
-//             {
-//               url: siteLogo,
-//               width: 800,
-//               height: 600,
-//               alt: "Logo",
-//             },
-//           ],
-//         }}
-//         additionalMetaTags={[
-//           { name: "viewport", content: "width=device-width, initial-scale=1.0" },
-//           { name: "keywords", content: keywords },
-//           { name: "charset", content: "UTF-8" },
-//         ]}
-//       />
-
-//       <Layout userSettings={userSettings}>
-//         {mainContent}
-//       </Layout>
-
-//     </>
-
-//   );
-// }
-
-
-
-// "use client";
-// import { useEffect } from "react";
-// import { pageview, event } from "@/lib/ga";
-// import styles from "./Variant.module.scss";
-
-// export default function VariantA() {
-//   useEffect(() => {
-//     pageview("/variantA");
-//   }, []);
-
-//   return (
-//     <div className={styles.container}>
-//       <h1>Variant A</h1>
-//       <p>This is the A version of the landing page.</p>
-//       <button
-//         onClick={() => event({ action: "click_button", params: { variant: "A" } })}
-//       >
-//         Click Me (A)
-//       </button>
-//     </div>
-//   );
-// }
-
 import { useEffect, useRef, useState } from "react";
 import { EditorView, basicSetup } from "codemirror";
 import { html } from "@codemirror/lang-html";
 import { css } from "@codemirror/lang-css";
 import { oneDark } from "@codemirror/theme-one-dark";
-import styles from './EditorPage.module.scss'
+import styles from "./EditorPage.module.scss";
+
+import { HTMLHint } from "htmlhint";
+import { CSSLint } from "csslint";
 
 export default function EditorPage() {
     const htmlRef = useRef(null);
@@ -96,6 +15,38 @@ export default function EditorPage() {
     const [htmlCode, setHtmlCode] = useState("<h1>Hello World</h1>");
     const [cssCode, setCssCode] = useState("h1 { color:red }");
 
+    const [htmlValidation, setHtmlValidation] = useState(null);
+    const [cssValidation, setCssValidation] = useState(null);
+    const [isValidating, setIsValidating] = useState(false);
+
+    // ✅ VALIDATE BOTH
+    const validateAll = () => {
+        setIsValidating(true);
+
+        // HTML VALIDATION
+        const htmlMessages = HTMLHint.verify(htmlCode);
+        if (htmlMessages.length === 0) {
+            setHtmlValidation({ valid: true, message: "✓ HTML is valid" });
+        } else {
+            setHtmlValidation({
+                valid: false,
+                message: htmlMessages[0].message,
+            });
+        }
+
+        // CSS VALIDATION
+        const cssResult = CSSLint.verify(cssCode);
+        if (cssResult.messages.length === 0) {
+            setCssValidation({ valid: true, message: "✓ CSS is valid" });
+        } else {
+            setCssValidation({
+                valid: false,
+                message: cssResult.messages[0].message,
+            });
+        }
+
+        setTimeout(() => setIsValidating(false), 300);
+    };
 
     // HTML Editor
     useEffect(() => {
@@ -108,6 +59,7 @@ export default function EditorPage() {
                 EditorView.updateListener.of((v) => {
                     if (v.docChanged) {
                         setHtmlCode(v.state.doc.toString());
+                        setHtmlValidation(null);
                     }
                 }),
             ],
@@ -128,6 +80,7 @@ export default function EditorPage() {
                 EditorView.updateListener.of((v) => {
                     if (v.docChanged) {
                         setCssCode(v.state.doc.toString());
+                        setCssValidation(null);
                     }
                 }),
             ],
@@ -139,38 +92,86 @@ export default function EditorPage() {
 
     const preview = `
     <html>
-      <head>
-        <style>${cssCode}</style>
-      </head>
-      <body>
-        ${htmlCode}
-      </body>
+        <head>
+            <style>${cssCode}</style>
+        </head>
+        <body>
+            ${htmlCode}
+        </body>
     </html>
-  `;
-
-    console.log("preview", preview)
-
+    `;
 
     return (
-        <div style={{ display: "flex", height: "100vh" }}>
+        <div className={styles.app}>
+            <div className={styles.editorSection}>
+                <div className={styles.editorHeader}>
+                    <h2 className={styles.title}>CODE EDITOR</h2>
+                    <button
+                        className={`${styles.validButton} ${isValidating ? styles.validating : ''}`}
+                        onClick={validateAll}
+                    >
+                        {/* <span className={styles.buttonIcon}>✓</span> */}
+                        VALIDATE CODE
+                    </button>
+                </div>
 
-            {/* LEFT SIDE EDITORS */}
-            <div style={{ width: "50%", padding: 10 }}>
-                <h3>HTML</h3>
-                <div ref={htmlRef} style={{ height: "45%", border: "1px solid #333", maxHeight: "500px" }} />
+                <div className={styles.editorGrid}>
+                    <div className={styles.editorCard}>
+                        <div className={styles.cardHeader}>
+                            <span className={styles.indicator} style={{ background: '#FF6B6B' }}></span>
+                            <h3 className={styles.editorTitle}>HTML</h3>
+                        </div>
+                        <div
+                            ref={htmlRef}
+                            className={styles.editorContainer}
+                        />
+                        {htmlValidation && (
+                            <div className={`${styles.validationMessage} ${htmlValidation.valid ? styles.success : styles.error}`}>
+                                <span className={styles.messageIcon}>
+                                    {htmlValidation.valid ? '✓' : '⚠'}
+                                </span>
+                                {htmlValidation.message}
+                            </div>
+                        )}
+                    </div>
 
-                <h3>CSS</h3>
-                <div ref={cssRef} style={{ height: "45%", border: "1px solid #333", maxHeight: "500px" }} />
+                    <div className={styles.editorCard}>
+                        <div className={styles.cardHeader}>
+                            <span className={styles.indicator} style={{ background: '#4ECDC4' }}></span>
+                            <h3 className={styles.editorTitle}>CSS</h3>
+                        </div>
+                        <div
+                            ref={cssRef}
+                            className={styles.editorContainer}
+                        />
+                        {cssValidation && (
+                            <div className={`${styles.validationMessage} ${cssValidation.valid ? styles.success : styles.error}`}>
+                                {/* <span className={styles.messageIcon}>
+                                    {cssValidation.valid ? '✓' : '⚠'}
+                                </span> */}
+                                {cssValidation.message}
+                            </div>
+                        )}
+                    </div>
+                </div>
             </div>
-            <div className={styles.contentSpace}>
-                <iframe
-                    srcDoc={preview}
-                    style={{ width: "100%",height:"100%", border: "none", background: "white" }}
-                    title="preview"
-                />
+
+            <div className={styles.previewSection}>
+                <div className={styles.previewHeader}>
+                    <div className={styles.previewTitle}>
+                        LIVE PREVIEW
+                    </div>
+                    {/* <span className={styles.previewBadge}>AUTO-UPDATE</span> */}
+                </div>
+                <div className={styles.contentSpace}>
+                    <iframe
+                        srcDoc={preview}
+                        className={styles.previewFrame}
+                        title="preview"
+                        sandbox="allow-scripts allow-same-origin"
+                    />
+                </div>
             </div>
         </div>
     );
 }
-
-
