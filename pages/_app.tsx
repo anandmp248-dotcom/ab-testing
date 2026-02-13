@@ -3,9 +3,15 @@ import type { AppProps } from "next/app";
 import { useEffect } from "react";
 import Head from "next/head";
 import '../styles/global.scss'
+import { Oswald } from "next/font/google";
+
+const oswald = Oswald({
+  subsets: ["latin"],
+  weight: ["200", "300", "400", "500", "600", "700"],
+});
+
 
 export default function App({ Component, pageProps }: AppProps) {
-
 
   useEffect(() => {
     import('bootstrap/dist/js/bootstrap.bundle.min.js');
@@ -36,7 +42,9 @@ export default function App({ Component, pageProps }: AppProps) {
           </>
         </head>
       </Head>
-      <Component {...pageProps} />
+      <main className={oswald.className}>
+        <Component {...pageProps} />
+      </main>
     </>
   );
 }

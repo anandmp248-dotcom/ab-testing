@@ -12,7 +12,18 @@ export default function EditorPage() {
     const htmlRef = useRef(null);
     const cssRef = useRef(null);
 
-    const [htmlCode, setHtmlCode] = useState("<h1>Hello World</h1>");
+    let initailDta = `<!DOCTYPE html>
+<html>
+<head>
+  <title>Page</title>
+</head>
+<body>
+  <h1>Hello</h1>
+</body>
+</html>
+`
+
+    const [htmlCode, setHtmlCode] = useState(initailDta);
     const [cssCode, setCssCode] = useState("h1 { color:red }");
 
     const [htmlValidation, setHtmlValidation] = useState(null);

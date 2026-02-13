@@ -41,7 +41,19 @@ a {
   }
 }
 
-// .ͼ1 .cm-scroller {
-//   min-height: 396px;
-//   max-height: 396px;
-// }
+.cm-editor {
+  background: transparent !important;
+}
+
+.cm-gutters {
+  background: #0f1a2b !important;
+  border-right: 1px solid #1e2a3a !important;
+}
+
+.cm-activeLineGutter {
+  background-color: rgba(246, 201, 14, 0.1) !important;
+}
+
+.cm-content {
+  font-family: "Fira Code", "Courier New", monospace;
+}

@@ -1,6 +1,3 @@
-// Oswald Font Import
-@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap");
-
 .app {
   display: flex;
   height: 100vh;
@@ -337,22 +334,4 @@
     min-height: 500px;
     padding: 18px;
   }
-}
-
-// Dark theme enhancements for editor
-:global(.cm-editor) {
-  background: transparent !important;
-}
-
-:global(.cm-gutters) {
-  background: #0f1a2b !important;
-  border-right: 1px solid #1e2a3a !important;
-}
-
-:global(.cm-activeLineGutter) {
-  background-color: rgba(246, 201, 14, 0.1) !important;
-}
-
-:global(.cm-content) {
-  font-family: "Fira Code", "Courier New", monospace;
 }
