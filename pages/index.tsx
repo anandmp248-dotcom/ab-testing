@@ -12,7 +12,7 @@ export default function EditorPage() {
     const htmlRef = useRef(null);
     const cssRef = useRef(null);
 
-    let initailDta = `<!DOCTYPE html>
+    const initailDta = `<!DOCTYPE html>
 <html>
 <head>
   <title>Page</title>
