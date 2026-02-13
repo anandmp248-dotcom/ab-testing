@@ -138,9 +138,9 @@ export default function EditorPage() {
                         />
                         {htmlValidation && (
                             <div className={`${styles.validationMessage} ${htmlValidation.valid ? styles.success : styles.error}`}>
-                                <span className={styles.messageIcon}>
+                                {/* <span className={styles.messageIcon}>
                                     {htmlValidation.valid ? '✓' : '⚠'}
-                                </span>
+                                </span> */}
                                 {htmlValidation.message}
                             </div>
                         )}
