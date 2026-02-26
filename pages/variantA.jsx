@@ -1,4 +1,3 @@
-"use client";
 import { useEffect } from "react";
 import { pageview, event } from "@/lib/ga";
 import styles from "./Variant.module.scss";
